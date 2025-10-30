@@ -1,4 +1,4 @@
-# MixFormerV2
+# DCATrack
 The official implementation of the NeurIPS 2023 paper: [**MixFormerV2: Efficient Fully Transformer Tracking**](https://arxiv.org/abs/2305.15896).
 
 ## Model Framework
@@ -113,3 +113,4 @@ Yutao Cui: cuiyutao@smail.nju.edu.cn
       archivePrefix={arXiv}
 }
 ```
+

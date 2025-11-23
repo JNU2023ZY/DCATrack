@@ -1,0 +1,6 @@
+from .mixformer2_vit import build_mixformer_vit as build_mixformer2_vit
+from .mixformer2_vit_stu import build_mixformer_vit as build_mixformer2_vit_stu
+from .mixformer2_vit_online import build_mixformer_vit_online as build_mixformer2_vit_online
+from .mixformer2_vit_adpt_online import build_mixformer_vit_adpt_online as build_mixformer2_vit_adpt_online
+from .mixformer2_vit_mem import build_mixformer_vit_mem as build_mixformer2_vit_mem
+from .mixformer2_vit_mem_online import build_mixformer_vit_mem_online as build_mixformer2_vit_mem_online

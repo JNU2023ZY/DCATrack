@@ -1,0 +1,97 @@
+DATA:
+  MAX_SAMPLE_INTERVAL: 200
+  MEAN:
+  - 0.485
+  - 0.456
+  - 0.406
+  SEARCH:
+    CENTER_JITTER: 4.5
+    FACTOR: 5.0 #4.5
+    SCALE_JITTER: 0.5
+    SIZE: 288
+  STD:
+  - 0.229
+  - 0.224
+  - 0.225
+  TEMPLATE:
+    CENTER_JITTER: 0
+    FACTOR: 2.0
+    SCALE_JITTER: 0
+    SIZE: 128
+    NUMBER: 2
+  TRAIN:
+    DATASETS_NAME:
+    - GOT10K_vottrain
+    - LASOT
+    - COCO17
+    - TRACKINGNET
+    DATASETS_RATIO:
+    - 1
+    - 1
+    - 1
+    - 1
+    SAMPLE_PER_EPOCH: 60000
+  VAL:
+    DATASETS_NAME:
+    - GOT10K_votval
+    DATASETS_RATIO:
+    - 1
+    SAMPLE_PER_EPOCH: 10000
+MODEL:
+  VIT_TYPE: base_patch16
+  FEAT_SZ: 96
+  BACKBONE:
+    DEPTH: 12
+    MLP_RATIO: 4
+    PRETRAINED: True
+    #PRETRAINED_PATH: '/data_F/zhouyong/MixFormerV2-main/288_qkv_r_disti_t_4_12_300/checkpoints/train/mixformer2_vit/student_288_depth12/MixFormer_ep0300.pth.tar'
+    #PRETRAINED_PATH: '/data_F/zhouyong/MixFormerV2-main/S_4_12_l/checkpoints/MixFormer_ep0300.pth.tar'  
+    PRETRAINED_PATH: '/data_F/zhouyong/MixFormerV2-main/MixformerV2_model/MixFormer2-288-12-ep0500-teacher-l.pth.tar'
+    #PRETRAINED_PATH: '/data_F/zhouyong/MixFormerV2-main/288_qkv_r_t12_distill_only_s12_feat/checkpoints/train/mixformer2_vit/student_288_depth12/MixFormer_ep0090.pth.tar'
+    #PRETRAINED_PATH: '/data_F/zhouyong/MixFormerV2-main/288_qkv_r_distill_t_4_12_300_online_score_6/checkpoints/train/mixformer2_vit_online/288_depth12_score/MixFormer_ep0040.pth.tar'
+    
+    #'/data0/cyt/experiments/trackmae/models/mae_pretrain_vit_base.pth'
+  HEAD_TYPE: MLP
+  HIDDEN_DIM: 768
+  PREDICT_MASK: false
+  REG_TOKENS: [2,2,2,2,2,2,2,2,2,2,2,2]
+  DECODER:
+    NHEADS: 8
+    DROPOUT: 0.1
+    DIM_FEEDFORWARD: 768
+    PRE_NORM: False
+    DIVIDE_NORM: False
+TRAIN:
+  BACKBONE_MULTIPLIER: 0.1
+  BATCH_SIZE: 16  # 8 for 2080ti (maybe 10), 32 for tesla V100(32 G)
+  DEEP_SUPERVISION: false
+  EPOCH: 500
+  IOU_WEIGHT: 2.0
+  GRAD_CLIP_NORM: 0.1
+  L1_WEIGHT: 2.0
+  CORNER_WEIGHT: 2.0
+  FEAT_WEIGHT: 0.2
+  LR: 0.0004
+  LR_DROP_EPOCH: 400
+  NUM_WORKER: 8
+  OPTIMIZER: ADAMW
+  PRINT_INTERVAL: 50
+  SCHEDULER:
+    TYPE: step
+    DECAY_RATE: 0.1
+  VAL_EPOCH_INTERVAL: 5
+  WEIGHT_DECAY: 0.0001
+  DISTILL_LAYERS_STUDENT: [4, 5, 6, 7]
+  DISTILL_LAYERS_TEACHER: [7, 7, 7, 7]
+TEST:
+  EPOCH: 500
+  SEARCH_FACTOR: 4.5
+  SEARCH_SIZE: 288
+  TEMPLATE_FACTOR: 2.0
+  TEMPLATE_SIZE: 128
+  UPDATE_INTERVALS:
+    LASOT: [200]
+    GOT10K_TEST: [200]
+    TRACKINGNET: [25]
+    VOT20: [10]
+    VOT20LT: [200]
